@@ -1,0 +1,97 @@
+.task-item {
+  text-align: center;
+  color: white;
+}
+
+.task-item .task-header {
+  display: block;
+  text-transform: uppercase;
+  padding: 0.8rem 0;
+  border-radius: 10px 10px 0 0;
+}
+
+.task-wrap {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  gap: 10px;
+}
+
+.imp-urg {
+  background-color: #fc483f
+}
+
+.imp {
+  background-color: #0cb528
+}
+
+.urg {
+  background-color: #1497e8
+}
+
+.usual {
+  background-color: #bababa;
+}
+
+.cmpl {
+  background-color: #000000;
+}
+
+.list-item{
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  padding: 1rem;
+  background-color: var(--sidebar);
+  border-radius: 10px;
+}
+
+.list-item:hover{
+  transition: 0.7s;
+  background-color: rgb(236, 252, 252);
+}
+
+.list-item:first-child{
+  border-radius: 0 0 10px 10px;
+}
+
+.list-item.completed{
+  background-color: #c0faed;
+}
+
+.list-item button {
+  width: 35px;
+  height: 35px;
+  margin: 3px;
+  font-size: 17px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.list-item button:hover {
+  transition: .5s;
+  background-color: var(--primary-color);
+  color: var(--sidebar);
+}
+
+.list-item-name {
+  cursor: pointer;
+}
+
+.list-item-descr {
+  color: grey;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.list-item-status {
+  display: flex;
+  gap: 5px;
+}
+
+.list-item .btn-trash {
+  color: #e5383b;
+}

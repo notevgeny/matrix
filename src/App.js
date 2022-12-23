@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
+import MainPage from './pages/MainPage';
+import TaskList from './pages/TaskList';
+import Completed from './pages/Completed';
+import Page404 from './pages/Page404';
+import { Context } from "./context/Context";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+
 function App() {
+  
+  const [tasklist, setTasklist] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider value={[tasklist, setTasklist]}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage/>}/>
+          <Route path="/tasklist" element={<TaskList/>}/>
+          <Route path="/completed" element={<Completed/>}/>
+          <Route path="*" element={<Page404/>}/>
+        </Routes>
+      </BrowserRouter>
+    </Context.Provider>
   );
 }
 

@@ -1,0 +1,71 @@
+.intro {
+  flex: 1;
+  justify-content: center;
+}
+
+.intro a {
+  text-decoration: none;
+}
+
+.intro .intro-header {
+  text-align: center;
+}
+
+.intro .intro-header h1 {
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.intro .intro-header h2 {
+  font-size: 1.4rem;
+}
+
+.intro .intro-header .slogan {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 1rem;
+}
+
+.intro .intro-descr{
+  display: flex;
+  margin: auto;
+  margin-top: 2rem;
+  
+}
+
+.intro .intro-descr ul{
+  padding-left: 0;
+  min-width: 500px;
+}
+
+.intro .intro-descr .descr-item{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+  list-style: none;
+  margin-left: 0;
+  height: 50px;
+}
+
+.intro .intro-descr .descr-item .action {
+  width: 20%;
+  text-transform: uppercase;
+}
+
+.intro .intro-descr .descr-item .icon {
+  width: 10%;
+}
+
+.intro .intro-descr .descr-item .icon i{
+  font-size: 30px;
+}
+
+.intro .intro-descr .descr-item .descr {
+  flex: 1;
+  text-align: left;
+}
+
