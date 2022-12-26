@@ -8,7 +8,7 @@
 
 .matrix-wrap {
   background-color: var(--body-color);
-  padding: 2rem calc(var(--sidebar-width) + 50px);
+  padding: 2rem 10rem 2rem calc(var(--sidebar-width) + 50px);
   height: 100%;
   width: 100%;
 }

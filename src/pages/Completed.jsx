@@ -1,8 +1,8 @@
 
 import { useEffect, useContext } from "react";
-import Sidebar from "../components/sidebar/Sidebar";
+import {Sidebar} from "../components/sidebar/Sidebar";
 import { Context } from "../context/Context";
-import TaskItem from "../components/card/TaskItem";
+import {TaskItem} from "../components/card/TaskItem";
 
 const Completed = () => {
   const [taskList, setTaskList] = useContext(Context);

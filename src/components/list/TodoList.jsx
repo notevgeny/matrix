@@ -1,16 +1,16 @@
 import { useState, useEffect, useContext } from 'react';
-import CreateTask from '../../modals/CreateTask';
-import Button from 'react-bootstrap/Button';
-import Sidebar from '../sidebar/Sidebar';
-import TaskItem from '../card/TaskItem';
-import './todolist.css';
+import { Sidebar } from '../sidebar/Sidebar';
+import { TaskItem } from '../card/TaskItem';
 import { Context } from '../../context/Context';
+import { SetModal } from '../../modal/SetModal';
+import Button from 'react-bootstrap/Button';
+import './todolist.css';
+
 
 
 const TodoList = () => {
 
-  const [modal, setModal] = useState(false);
-  // const [taskList, setTaskList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [taskList, setTaskList] = useContext(Context);
 
@@ -21,52 +21,54 @@ const TodoList = () => {
     }
   }, [])
 
-  const toggle = () => setModal(!modal);
-
-  const saveTask = (taskObj) => {
-    let tmpList = taskList;
-    tmpList.push(taskObj);
-    localStorage.setItem('taskList', JSON.stringify(tmpList))
-    setTaskList(tmpList);
-    setModal(false);
+  const setLocalStorage = (obj) => {
+    localStorage.setItem('taskList', JSON.stringify(obj));
+    setTaskList(obj);
   }
 
-  const updateTask = (taskObj, i) => {
-    let tmpList = taskList;
-    tmpList[i] = taskObj;
-    localStorage.setItem('taskList', JSON.stringify(tmpList))
-    setTaskList(tmpList);
+  const toggleIsModalOpen = () => setIsModalOpen(!isModalOpen);
+
+  const saveTask = (taskObj) => {
+    const newTask = [...taskList, taskObj]
+    setLocalStorage(newTask);
+    setIsModalOpen(false);
+  }
+
+  const updateTask = (taskObj) => {
+    taskList.map((item, index) => {
+      if (item.id === taskObj.id){
+        taskList.splice(index, 1, taskObj);
+      }
+    })
+    setLocalStorage([...taskList]);
     setUpdate(!update);
   }
 
-  const deleteTask = (i) => {
-    let data = taskList.filter((elem, index) => index !== i );
-    localStorage.setItem("taskList", JSON.stringify(data));
-    setTaskList(data);
+  const deleteTask = (id) => {
+    let data = taskList.filter((elem) => elem.id !== id );
+    setLocalStorage(data);
   }
 
-  const completeTask = (i) => {
-    let data = taskList.map((item, index) => {
-      if (index === i){
+  const completeTask = (id) => {
+    let data = taskList.map((item) => {
+      if (item.id === id){
        item.completed = !item.completed;
        item.date = new Date().toLocaleString();
       }
       return item;
     })
-    localStorage.setItem("taskList", JSON.stringify(data));
-    setTaskList(data);
+    setLocalStorage(data);
   }
 
-  const items = taskList.map((item, i) => {
+  const items = taskList.map((item) => {
     return (
       <TaskItem
         value={item.value} 
-        key={i} 
+        key={item.id}
         taskObj={item}
-        index={i}
-        updateTask={updateTask}
-        deleteTask={deleteTask}
-        completeTask={completeTask}
+        onUpdateTask={updateTask}
+        onDeleteTask={deleteTask}
+        onCompleteTask={completeTask}
       />
     )
   })
@@ -88,7 +90,7 @@ const TodoList = () => {
           </div>
           <div className="task-container task-container-header">  
           <span className='d-flex align-items-center'>All tasks: {allItems.length}</span>
-          <Button variant="primary" style={{justifySelf: 'end', width: '3rem', fontSize: '1.5rem', lineHeight: '1.2'}} onClick={() => setModal(true)}>+</Button>
+          <Button variant="primary" style={{justifySelf: 'end', width: '3rem', fontSize: '1.5rem', lineHeight: '1.2'}} onClick={() => setIsModalOpen(true)}>+</Button>
           </div>
           <div className="task-container">
             <div className="task-item">
@@ -127,10 +129,10 @@ const TodoList = () => {
         </div>
       </div>
   
-      <CreateTask modal={modal} toggle={toggle} saveTask={saveTask}/>
+      <SetModal isModalOpen={isModalOpen} onToggleIsModalOpen={toggleIsModalOpen} onSaveTask={saveTask} onSave={true}/>
     </>
   )
 }
 
-export default TodoList;
+export {TodoList};
 

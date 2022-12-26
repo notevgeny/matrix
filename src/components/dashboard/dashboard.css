@@ -1,5 +1,12 @@
+.dashboard {
+  padding: 2rem !important
+}
+
+.dashboard .flex-gap{
+  gap: 8rem;
+}
+
 .intro {
-  flex: 1;
   justify-content: center;
 }
 

@@ -46,8 +46,8 @@ const Dashboard = () => {
   return (
 
     <div className="d-flex flex-wrap container-fluid pe-0 ps-0 justify-content-between">
-      <div className="matrix-wrap">
-        <div className="d-flex flex-wrap align-items-center justify-content-between pt-5 pb-5">     
+      <div className="matrix-wrap dashboard">
+        <div className="d-flex flex-gap flex-wrap align-items-center justify-content-center pt-5 pb-5">     
         <div className="intro d-flex flex-column">
         <div className="intro-header">
           <h1>Eisenhower Matrix</h1>

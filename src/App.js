@@ -11,9 +11,9 @@ import './App.css';
 
 function App() {
   
-  const [tasklist, setTasklist] = useState([]);
+  const [taskList, setTaskList] = useState([]);
   return (
-    <Context.Provider value={[tasklist, setTasklist]}>
+    <Context.Provider value={[taskList, setTaskList]}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage/>}/>

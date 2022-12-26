@@ -1,37 +1,37 @@
 import { useState } from "react";
-import EditTask from "../../modals/EditTask";
+import { SetModal } from "../../modal/SetModal";
 import './taskItem.css';
 
 
-const TaskItem = ({ taskObj, index, updateTask, deleteTask, completeTask}) => {
+const TaskItem = ({ taskObj, onUpdateTask, onDeleteTask, onCompleteTask}) => {
 
   let classNames = "list-item";
   if (taskObj.completed){
     classNames += ' completed';
   }
 
-  const [modal, setModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  const handleToggleIsModalOpen = () => setIsModalOpen(!isModalOpen);
 
-  const onUpdate = (obj) => {
-    updateTask(obj, index);
-    setModal(false);
+  const handleUpdate = (obj) => {
+    onUpdateTask(obj);
+    setIsModalOpen(false);
   } 
 
-  const onDelete = () => {
-    deleteTask(index)
+  const handleDelete = () => {
+    onDeleteTask(taskObj.id)
   }
 
-  const onComplete = () => {
-    completeTask(index)
+  const handleComplete = () => {
+    onCompleteTask(taskObj.id)
   }
 
   const date = taskObj.completed? taskObj.date : null;
 
   return (
     <li className={classNames}> 
-      <span className="list-item-name" onDoubleClick={onComplete}>{taskObj.taskName}</span>
+      <span className="list-item-name" onDoubleClick={handleComplete}>{taskObj.taskName}</span>
       <span className="list-item-descr">{taskObj.taskDescription}</span>
       <span className="list-item-descr">{date}</span>
       {/* <div className="list-item-status">
@@ -41,7 +41,7 @@ const TaskItem = ({ taskObj, index, updateTask, deleteTask, completeTask}) => {
       
       <div className="d-flex align-items-center">
         <button 
-          onClick={() => setModal(true)}
+          onClick={() => setIsModalOpen(true)}
           type="button" 
           className="btn-sm" 
           style={{marginRight: '0.5rem'}}
@@ -50,15 +50,22 @@ const TaskItem = ({ taskObj, index, updateTask, deleteTask, completeTask}) => {
         </button>
 
         <button
-          onClick={onDelete}
+          onClick={handleDelete}
           type="button" 
           className="btn-trash btn-sm">
           <i className="fas fa-trash"></i>
         </button>
       </div>
-      <EditTask taskObj={taskObj} modal={modal} toggle={toggle} updateTask={onUpdate}/>
+      <SetModal 
+        taskId={taskObj.id}
+        taskObj={taskObj} 
+        isModalOpen={isModalOpen} 
+        onToggleIsModalOpen={handleToggleIsModalOpen} 
+        onUpdateTask={handleUpdate} 
+        onSave={false}
+        />
     </li>
   );
 };
 
-export default TaskItem;
+export {TaskItem};
