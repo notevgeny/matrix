@@ -1,19 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
+import { TasksProvider } from './modules/tasks'
 import MainPage from './pages/MainPage';
 import TaskList from './pages/TaskList';
 import Completed from './pages/Completed';
 import Page404 from './pages/Page404';
-import { Context } from "./context/Context";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 
 function App() {
   
-  const [taskList, setTaskList] = useState([]);
   return (
-    <Context.Provider value={[taskList, setTaskList]}>
+    <TasksProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage/>}/>
@@ -22,7 +21,7 @@ function App() {
           <Route path="*" element={<Page404/>}/>
         </Routes>
       </BrowserRouter>
-    </Context.Provider>
+    </TasksProvider>
   );
 }
 

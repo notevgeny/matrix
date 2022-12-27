@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useTasks } from "../../modules/tasks";
+
 import { SetModal } from "../../modal/SetModal";
+
 import './taskItem.css';
 
+const TaskItem = ({ taskObj }) => {
 
-const TaskItem = ({ taskObj, onUpdateTask, onDeleteTask, onCompleteTask}) => {
+  const { onUpdateTask, onDeleteTask, onCompleteTask } = useTasks();
 
   let classNames = "list-item";
   if (taskObj.completed){
@@ -27,19 +31,20 @@ const TaskItem = ({ taskObj, onUpdateTask, onDeleteTask, onCompleteTask}) => {
     onCompleteTask(taskObj.id)
   }
 
-  const date = taskObj.completed? taskObj.date : null;
+  const dateOfTaskComplete = taskObj.completed? taskObj.date : null;
 
   return (
     <li className={classNames}> 
       <span className="list-item-name" onDoubleClick={handleComplete}>{taskObj.taskName}</span>
       <span className="list-item-descr">{taskObj.taskDescription}</span>
-      <span className="list-item-descr">{date}</span>
+      <span className="list-item-descr">{dateOfTaskComplete}</span>
       {/* <div className="list-item-status">
         <span>{taskObj.important? <i className="fa-solid fa-circle-exclamation"></i> : ''}</span>
         <span>{taskObj.urgent? <i className="fa-solid fa-clock"></i> : ''}</span>
       </div> */}
       
       <div className="d-flex align-items-center">
+        
         <button 
           onClick={() => setIsModalOpen(true)}
           type="button" 
@@ -55,15 +60,18 @@ const TaskItem = ({ taskObj, onUpdateTask, onDeleteTask, onCompleteTask}) => {
           className="btn-trash btn-sm">
           <i className="fas fa-trash"></i>
         </button>
+
       </div>
+
       <SetModal 
         taskId={taskObj.id}
         taskObj={taskObj} 
         isModalOpen={isModalOpen} 
         onToggleIsModalOpen={handleToggleIsModalOpen} 
         onUpdateTask={handleUpdate} 
-        onSave={false}
-        />
+        isModalToSave={false}
+      />
+        
     </li>
   );
 };

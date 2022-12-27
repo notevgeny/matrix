@@ -1,32 +1,25 @@
+import { useEffect } from "react";
+import { useTasks } from "../modules/tasks";
 
-import { useEffect, useContext } from "react";
-import {Sidebar} from "../components/sidebar/Sidebar";
-import { Context } from "../context/Context";
-import {TaskItem} from "../components/card/TaskItem";
+import { Sidebar } from "../components/sidebar/Sidebar";
+import { TaskItem } from "../components/card/TaskItem";
+
 
 const Completed = () => {
-  const [taskList, setTaskList] = useContext(Context);
 
-  useEffect(() => {
-    let data = JSON.parse(localStorage.getItem('taskList'));
-    if (data){
-      setTaskList(data)
-    }
-  }, [])
+  const { taskList } = useTasks();
 
-  const items = taskList.map((item, i) => {
+  const taskCards = taskList.map((item) => {
     return (
       <TaskItem
         value={item.value} 
-        key={i} 
+        key={item.id} 
         taskObj={item}
-        index={i}
       />
     )
   })
 
-  const completedItems = items.filter(item => item.props.taskObj.completed);
-
+  const completedCards = taskCards.filter(item => item.props.taskObj.completed);
 
   return (
       <div className="d-flex flex-wrap container-fluid pe-0 ps-0 justify-content-between pb-5">
@@ -36,9 +29,9 @@ const Completed = () => {
             <h1>Completed Tasks</h1>
           </div>     
           <div className="task-item">
-              <span className="task-header cmpl">Completed<span className='circle'>{completedItems.length}</span></span>
+              <span className="task-header cmpl">Completed<span className='circle'>{completedCards.length}</span></span>
               <div className="task-wrap">
-                {completedItems.length? completedItems : 'There is no completed tasks'}
+                {completedCards.length? completedCards : 'There is no completed tasks'}
               </div> 
             </div>
         </div>

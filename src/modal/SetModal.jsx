@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label } from 'reactstrap';
 import { v4 as uuidv4 } from 'uuid';
 
-const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, onSave, onSaveTask, onUpdateTask}) => {
+const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, isModalToSave, onSaveTask, onUpdateTask}) => {
 
   const [id, setId] = useState(taskId);
   const [taskName, setTaskName] = useState('');
@@ -12,10 +12,9 @@ const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, onSave, on
   const [completed, setCompleted] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  const ref = useRef(null);
 
   useEffect(() => {
-    if (!onSave){
+    if (!isModalToSave){
       setTaskName(taskObj.taskName);
       setTaskDescription(taskObj.taskDescription);
       setImportant(taskObj.important);
@@ -62,10 +61,11 @@ const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, onSave, on
     setDate(null);
   }
 
-  const typeOfModal = onSave ? 
+  const typeOfModalButton = isModalToSave ? 
     <Button color="primary" onClick={(e) => {
       handleSave(e)
       handleClear(e)
+      onToggleIsModalOpen(false);
     }}> 
       Create
     </Button> : 
@@ -76,13 +76,12 @@ const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, onSave, on
 
   return (
     <Modal isOpen={isModalOpen} toggle={onToggleIsModalOpen}>
-        <ModalHeader toggle={onToggleIsModalOpen}>{ onSave ? 'Create Task' : 'Update Task'}</ModalHeader>
+        <ModalHeader toggle={onToggleIsModalOpen}>{ isModalToSave ? 'Create Task' : 'Update Task'}</ModalHeader>
         <ModalBody>
           <form>
             <div className="form-group">
               <label>Task name</label>
               <input
-                ref={ref}
                 value={taskName}
                 onChange={(e)=> setTaskName(e.target.value)} 
                 type="text" 
@@ -120,7 +119,7 @@ const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, onSave, on
           </form>
         </ModalBody>
         <ModalFooter>
-          {typeOfModal}
+          {typeOfModalButton}
           <Button color="secondary" onClick={onToggleIsModalOpen}>
             Cancel
           </Button>
