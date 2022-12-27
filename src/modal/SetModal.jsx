@@ -1,131 +1,32 @@
-import { useState, useEffect } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label } from 'reactstrap';
-import { v4 as uuidv4 } from 'uuid';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-const SetModal = ({taskObj, taskId, isModalOpen, onToggleIsModalOpen, isModalToSave, onSaveTask, onUpdateTask}) => {
+import { TaskEditForm } from "../modules/tasks/components/TaskEditForm";
 
-  const [id, setId] = useState(taskId);
-  const [taskName, setTaskName] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
-  const [important, setImportant] = useState(true);
-  const [urgent, setUrgent] = useState(true);
-  const [completed, setCompleted] = useState(false);
-  const [date, setDate] = useState(new Date());
-
-
-  useEffect(() => {
-    if (!isModalToSave){
-      setTaskName(taskObj.taskName);
-      setTaskDescription(taskObj.taskDescription);
-      setImportant(taskObj.important);
-      setUrgent(taskObj.urgent);
-      setCompleted(taskObj.completed);
-      setDate(taskObj.date);
-    } 
-    
-  }, []);
-
-  const handleSave = (e) => {
-    e.preventDefault();
-    let taskObj = {};
-    taskObj['id'] = uuidv4();
-    taskObj["taskName"] = taskName;
-    taskObj["taskDescription"] = taskDescription;
-    taskObj["important"] = important;
-    taskObj["urgent"] = urgent;
-    taskObj["completed"] = completed;
-    taskObj["date"] = date;
-    onSaveTask(taskObj);
-  }
-
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    let taskObj = {};
-    taskObj["id"] = id;
-    taskObj["taskName"] = taskName;
-    taskObj["taskDescription"] = taskDescription;
-    taskObj["important"] = important;
-    taskObj["urgent"] = urgent;
-    taskObj["completed"] = completed;
-    taskObj["date"] = date;
-    onUpdateTask(taskObj);
-  }
-
-  const handleClear = (e) => {
-    e.preventDefault();
-    setTaskName('');
-    setTaskDescription('');
-    setImportant(true);
-    setUrgent(true);
-    setCompleted(false);
-    setDate(null);
-  }
-
-  const typeOfModalButton = isModalToSave ? 
-    <Button color="primary" onClick={(e) => {
-      handleSave(e)
-      handleClear(e)
-      onToggleIsModalOpen(false);
-    }}> 
-      Create
-    </Button> : 
-    <Button color="primary" onClick={handleUpdate}> 
-      Update
-    </Button>
-
-
+const SetModal = ({
+  taskObj,
+  isModalOpen,
+  onToggleIsModalOpen,
+  isModalToSave,
+}) => {
   return (
     <Modal isOpen={isModalOpen} toggle={onToggleIsModalOpen}>
-        <ModalHeader toggle={onToggleIsModalOpen}>{ isModalToSave ? 'Create Task' : 'Update Task'}</ModalHeader>
-        <ModalBody>
-          <form>
-            <div className="form-group">
-              <label>Task name</label>
-              <input
-                value={taskName}
-                onChange={(e)=> setTaskName(e.target.value)} 
-                type="text" 
-                className="form-control"/>
-            </div>
-            <div className="form-group mt-3">
-              <label>Description</label>
-              <textarea
-                value={taskDescription}
-                onChange={(e)=> setTaskDescription(e.target.value)} 
-                className="form-control" 
-                rows="5">
-                </textarea>
-            </div>
-            <FormGroup switch className='mt-3'>
-              <Input
-                type="switch"
-                checked={important}
-                onChange={() => {
-                  setImportant(important => !important);
-                }}
-              />
-              <Label check>The task is important</Label>
-            </FormGroup>
-            <FormGroup switch>
-              <Input
-                  type="switch"
-                  checked={urgent}
-                  onChange={() => {
-                    setUrgent(urgent => !urgent);
-                  }}
-                />
-                <Label check>The task is urgent</Label>
-            </FormGroup>
-          </form>
-        </ModalBody>
-        <ModalFooter>
-          {typeOfModalButton}
-          <Button color="secondary" onClick={onToggleIsModalOpen}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
+      <ModalHeader toggle={onToggleIsModalOpen}>
+        {isModalToSave ? "Create Task" : "Update Task"}
+      </ModalHeader>
+      <ModalBody>
+        <TaskEditForm
+          formType={isModalToSave ? "create" : "update"}
+          task={taskObj}
+          onModalIsOpenToggle={onToggleIsModalOpen}
+        />
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" onClick={onToggleIsModalOpen}>
+          Cancel
+        </Button>
+      </ModalFooter>
+    </Modal>
   );
 };
 
-export {SetModal};
+export { SetModal };
