@@ -5,6 +5,8 @@ const useTasks = () => {
   const {
     taskList, 
     onTaskListUpdate,
+    sidebarIsOpen,
+    sidebarToggle,
     onSaveTask,
     onUpdateTask,
     onDeleteTask,
@@ -13,7 +15,9 @@ const useTasks = () => {
 
   return { 
     taskList, 
-    onTaskListUpdate, 
+    onTaskListUpdate,
+    sidebarIsOpen,
+    sidebarToggle, 
     onSaveTask, 
     onUpdateTask, 
     onDeleteTask, 

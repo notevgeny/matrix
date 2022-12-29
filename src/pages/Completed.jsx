@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { useTasks } from "../modules/tasks";
 
-import { Sidebar } from "../components/sidebar/Sidebar";
-import { TaskItem } from "../components/card/TaskItem";
+import { Sidebar } from "../components/Sidebar/Sidebar";
+import { TaskItem } from "../components/TaskItem/TaskItem";
 
 
 const Completed = () => {
@@ -14,12 +13,12 @@ const Completed = () => {
       <TaskItem
         value={item.value} 
         key={item.id} 
-        taskObj={item}
+        task={item}
       />
     )
   })
 
-  const completedCards = taskCards.filter(item => item.props.taskObj.completed);
+  const completedCards = taskCards.filter(item => item.props.task.isCompleted);
 
   return (
       <div className="d-flex flex-wrap container-fluid pe-0 ps-0 justify-content-between pb-5">

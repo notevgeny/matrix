@@ -1,15 +1,12 @@
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTasks } from '../../modules/tasks';
+
 import './sidebar.css';
 import logo from './Logo.svg';
 
 const Sidebar = () => {
 
-  const [isOpen, setIsOpen] = useState(true);
-
-  const toggle = () => {
-    setIsOpen(!isOpen)
-  }
+  const { sidebarIsOpen, sidebarToggle } = useTasks();
 
   const menuList = [
     {
@@ -29,7 +26,7 @@ const Sidebar = () => {
     },
   ]
 
-  const classNames = isOpen ? 'sidebar' : 'sidebar closed';
+  const classNames = sidebarIsOpen ? 'sidebar' : 'sidebar closed';
 
   const menu = menuList.map((item, index) => {
     return (
@@ -42,10 +39,8 @@ const Sidebar = () => {
         <span className="text nav-text">{item.name}</span>
       </NavLink>
       </li>
-      
     )
-  }
-  )
+  })
   
   return (
     <nav className={classNames}>
@@ -59,8 +54,7 @@ const Sidebar = () => {
             <span className="desc">Your task-manager</span>
           </div>
         </div>
-        <i className="fa-solid fa-arrow-left toggle" onClick={toggle}></i>
-
+        <i className="fa-solid fa-arrow-left toggle" onClick={sidebarToggle}></i>
       </header>
 
       <div className="menu-bar">

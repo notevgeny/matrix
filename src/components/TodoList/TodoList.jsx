@@ -1,41 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTasks } from '../../modules/tasks';
 
-import { Sidebar } from '../sidebar/Sidebar';
-import { TaskItem } from '../card/TaskItem';
-import { SetModal } from '../../modal/SetModal';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TaskItem } from '../TaskItem/TaskItem';
+import { SetModal } from '../../TaskEditModal/TaskEditModal';
 
 import Button from 'react-bootstrap/Button';
 import './todolist.css';
 
 const TodoList = () => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ isModalOpen, setIsModalOpen] = useState(false);
   const { taskList, onSaveTask } = useTasks();
 
   const toggleIsModalOpen = () => setIsModalOpen(!isModalOpen);
 
   const taskCards = taskList.map((item) => {
-    return (
-      <TaskItem key={item.id} taskObj={item} />
-    )
+    return <TaskItem key={item.id} task={item} />
   })
 
-  const attentionCards = taskCards.filter(item => item.props.taskObj.urgent && item.props.taskObj.important &&
-  !item.props.taskObj.completed);
-  const urgentCards = taskCards.filter(item => item.props.taskObj.urgent && !item.props.taskObj.important &&
-  !item.props.taskObj.completed);
-  const importantCards = taskCards.filter(item => item.props.taskObj.important && !item.props.taskObj.urgent &&
-  !item.props.taskObj.completed);
-  const usualCards = taskCards.filter(item => !item.props.taskObj.important && !item.props.taskObj.urgent &&
-  !item.props.taskObj.completed);
-  const allCards = taskCards.filter(item => !item.props.taskObj.completed);
+  const attentionCards = taskCards.filter(item => item.props.task.isUrgent && item.props.task.isImportant && !item.props.task.isCompleted);
+  const urgentCards = taskCards.filter(item => item.props.task.isUrgent && !item.props.task.isImportant && !item.props.task.isCompleted);
+  const importantCards = taskCards.filter(item => item.props.task.isImportant && !item.props.task.isUrgent && !item.props.task.isCompleted);
+  const usualCards = taskCards.filter(item => !item.props.task.isImportant && !item.props.task.isUrgent && !item.props.task.isCompleted);
+  const allCards = taskCards.filter(item => !item.props.task.isCompleted);
 
   return (
   <>
     <div className="main-container d-flex flex-wrap container-fluid pe-0 ps-0 justify-content-between">
       <Sidebar />
-      <div className="matrix-wrap flex-grow-1">
+      <div className="matrix-wrap">
         <div className="header d-flex align-items-center">
           <h1>Your tasklist</h1>
         </div>
@@ -82,8 +76,12 @@ const TodoList = () => {
       </div>
     </div>
 
-    <SetModal isModalOpen={isModalOpen} onToggleIsModalOpen={toggleIsModalOpen} onSaveTask={onSaveTask}
-      isModalToSave={true} />
+    <SetModal 
+      isModalOpen={isModalOpen} 
+      onToggleIsModalOpen={toggleIsModalOpen} 
+      onSaveTask={onSaveTask}
+      isModalToCreate={true} 
+    />
   </>
   )
 }

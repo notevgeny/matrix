@@ -8,9 +8,16 @@
 
 .matrix-wrap {
   background-color: var(--body-color);
-  padding: 2rem 10rem 2rem calc(var(--sidebar-width) + 50px);
+  padding: 2rem 8rem 2rem calc(var(--sidebar-width) + 30px);
   height: 100%;
   width: 100%;
+}
+
+@media screen and (max-width: 1199px) {
+  .matrix-wrap {
+    --sidebar-width: 90px;
+    padding: 2rem calc(var(--sidebar-width) + 30px);
+  }
 }
 
 .task-container {
@@ -20,7 +27,31 @@
   justify-content: space-around;
 }
 
-.task-container.task-container-header {
+
+@media screen and (max-width: 991px) {
+
+  .matrix-wrap {
+    --sidebar-width: 90px;
+    padding: 2rem 2rem 2rem calc(var(--sidebar-width) + 30px);
+  }
+
+  .task-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .matrix-wrap {
+    padding: 2rem;
+    padding-left: 3rem;
+  }
+
+  .task-container {
+    gap: 30px;
+  }
+}
+
+.task-container-header {
   margin-bottom: 2rem;
 }
 

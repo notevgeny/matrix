@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useTasks } from "../../modules/tasks";
 
-import { SetModal } from "../../modal/SetModal";
+import { SetModal } from "../../TaskEditModal/TaskEditModal";
 
 import './taskItem.css';
 
-const TaskItem = ({ taskObj }) => {
+const TaskItem = ({ task }) => {
 
   const { onUpdateTask, onDeleteTask, onCompleteTask } = useTasks();
 
   let classNames = "list-item";
-  if (taskObj.completed){
+  if (task.isCompleted){
     classNames += ' completed';
   }
 
@@ -24,23 +24,23 @@ const TaskItem = ({ taskObj }) => {
   } 
 
   const handleDelete = () => {
-    onDeleteTask(taskObj.id)
+    onDeleteTask(task.id)
   }
 
   const handleComplete = () => {
-    onCompleteTask(taskObj.id)
+    onCompleteTask(task.id)
   }
 
-  const dateOfTaskComplete = taskObj.completed? taskObj.date : null;
+  const dateOfTaskComplete = task.isCompleted? task.date : null;
 
   return (
     <li className={classNames}> 
-      <span className="list-item-name" onDoubleClick={handleComplete}>{taskObj.taskName}</span>
-      <span className="list-item-descr">{taskObj.taskDescription}</span>
+      <span className="list-item-name" onClick={handleComplete}>{task.name}</span>
+      <span className="list-item-descr">{task.description}</span>
       <span className="list-item-descr">{dateOfTaskComplete}</span>
       {/* <div className="list-item-status">
-        <span>{taskObj.important? <i className="fa-solid fa-circle-exclamation"></i> : ''}</span>
-        <span>{taskObj.urgent? <i className="fa-solid fa-clock"></i> : ''}</span>
+        <span>{taskObj.isImportant? <i className="fa-solid fa-circle-exclamation"></i> : ''}</span>
+        <span>{taskObj.isUrgent? <i className="fa-solid fa-clock"></i> : ''}</span>
       </div> */}
       
       <div className="d-flex align-items-center">
@@ -64,12 +64,12 @@ const TaskItem = ({ taskObj }) => {
       </div>
 
       <SetModal 
-        taskId={taskObj.id}
-        taskObj={taskObj} 
+        taskId={task.id}
+        task={task} 
         isModalOpen={isModalOpen} 
         onToggleIsModalOpen={handleToggleIsModalOpen} 
         onUpdateTask={handleUpdate} 
-        isModalToSave={false}
+        isModalToCreate={false}
       />
         
     </li>

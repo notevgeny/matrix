@@ -23,6 +23,12 @@
   width: var(--sidebar-width);
 }
 
+@media screen and (max-width: 550px) {
+  .sidebar.closed {
+    transform: translateX(-75px);
+  }
+}
+
 .sidebar.closed .text {
   opacity: 0;
 }

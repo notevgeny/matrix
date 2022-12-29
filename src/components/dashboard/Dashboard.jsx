@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import matrix from '../dashboard/matrix.jpg';
+import matrix from '../Dashboard/matrix.jpg';
 import './dashboard.css';
 
 
@@ -25,8 +25,8 @@ const Dashboard = () => {
     },
     {
       action: 'Complete',
-      icon: 'fa-solid fa-check-double',
-      description: 'Doubleclick the task name to complete it'
+      icon: 'fa-solid fa-check',
+      description: 'Click the task name to complete it'
     },
   ];
 
