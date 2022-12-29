@@ -1,5 +1,5 @@
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { TaskEditForm } from '../components/TaskEditForm/TaskEditForm';
+import { TaskEditForm } from '../TaskEditForm/TaskEditForm';
 
 const SetModal = ({task, isModalOpen, onToggleIsModalOpen, isModalToCreate, onSaveTask, onUpdateTask}) => {
 

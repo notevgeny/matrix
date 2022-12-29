@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTasks } from "../../modules/tasks";
 
-import { SetModal } from "../../TaskEditModal/TaskEditModal";
+import { SetModal } from "../TaskEditModal/TaskEditModal";
 
 import './taskItem.css';
 

@@ -3,7 +3,7 @@ import { useTasks } from '../../modules/tasks';
 
 import { Sidebar } from '../Sidebar/Sidebar';
 import { TaskItem } from '../TaskItem/TaskItem';
-import { SetModal } from '../../TaskEditModal/TaskEditModal';
+import { SetModal } from '../TaskEditModal/TaskEditModal';
 
 import Button from 'react-bootstrap/Button';
 import './todolist.css';
